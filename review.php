@@ -1,20 +1,33 @@
 <?php
-
-    function displayRandomImage() {
-        echo "<img src='imgs/cards/clubs/".rand(1,13).".png'>";
-    }
+    $players = array("Joe"=>0, "Peter"=>0, "Quagmire"=>0, "Cleaveland"=>0);
+    $deck = range(1, 52);
     
     function dealCard() {
         $suitArray = array("clubs","diamonds","hearts","spades");
         echo "<img src='imgs/cards/".$suitArray[rand(0,3)]."/".rand(1,13).".png'>";
         
-        $deck = range(1, 52);
         shuffle($deck);
         print_r($deck);
         $card = array_pop($deck);
         echo "popped: " . $card;
+        return $cardValue;
         
     }
+    
+    function getHand() {
+        global $players;
+        foreach($players as $player => $value) {
+            while ($value <= 36) {
+                $value += dealCard();
+            }
+        }
+        
+    }
+    
+    // global variable: winnerName;  winnerScore;  associative_array ["person1", "person2", "person3", "person4"]; 
+    // getHand();
+    // displayHand(array(5, 15, 33, 22, 50));
+    // displayWinners();
     
     /*
     function displayArray() {
