@@ -1,29 +1,55 @@
 <?php
-    $players = array("Joe"=>0, "Peter"=>0, "Quagmire"=>0, "Cleaveland"=>0);
+    $players = array("Joe", "Peter", "Quagmire", "Cleaveland");
+    $playerOne = array();
+    $playerTwo = array();
+    $playerThree = array();
+    $playerFour = array();
+    
+    $suitArray = array("clubs","diamonds","hearts","spades");
     $deck = range(1, 52);
+    shuffle($deck);
     
     function dealCard() {
-        $suitArray = array("clubs","diamonds","hearts","spades");
-        echo "<img src='imgs/cards/".$suitArray[rand(0,3)]."/".rand(1,13).".png'>";
-        
-        shuffle($deck);
-        print_r($deck);
+        global $deck;
         $card = array_pop($deck);
-        echo "popped: " . $card;
-        return $cardValue;
+        return $card;
         
     }
     
-    function getHand() {
+    function getHand(&$player) {
+        $handTotal = 0;
+        while ($handTotal <= 36) {
+            $cardNum = dealCard();
+            $cv = ($cardNum % 13) + 1;
+            
+            $handTotal += $cv;
+            array_push($player, $cardNum);
+        }
+    }
+    
+    function displayHand($player, $playerNum) {
         global $players;
-        foreach($players as $player => $value) {
-            while ($value <= 36) {
-                $value += dealCard();
-            }
+        global $suitArray;
+        $handTotal = 0;
+        
+        echo "<p>" . $players[$playerNum] . "</p>";
+        foreach ($player as $vals) {
+            $cardSuit = floor($vals / 13);
+            $cv = ($vals % 13) + 1;
+            $handTotal += $cv;
+            
+            echo "<img src='imgs/cards/".$suitArray[$cardSuit]."/".$cv.".png'>";
         }
         
+        echo $handTotal;
     }
     
+    function displayWinner() {
+        
+    }
+    
+    
+    //echo "<img src='imgs/cards/".$suitArray[rand(0,3)]."/".rand(1,13).".png'>";
     // global variable: winnerName;  winnerScore;  associative_array ["person1", "person2", "person3", "person4"]; 
     // getHand();
     // displayHand(array(5, 15, 33, 22, 50));
@@ -84,9 +110,21 @@
 <html>
     <head>
         <title> Silverjack </title>
+        <link rel="stylesheet" type="text/css" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css">
     </head>
     <body>
-        <h1>Silverjack</h1>
-        <?=dealCard() ?>
+        <?=getHand($playerOne) ?>
+        <?=getHand($playerTwo) ?>
+        <?=getHand($playerThree) ?>
+        <?=getHand($playerFour) ?>
+        
+        <div id="wrapper">
+            <h1>Silverjack</h1>
+            <?=displayHand($playerOne, 0) ?>
+            <?=displayHand($playerTwo, 1) ?>
+            <?=displayHand($playerThree, 2) ?>
+            <?=displayHand($playerFour, 3) ?>
+        </div>
+        
     </body>
 </html>
