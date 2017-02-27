@@ -1,0 +1,15 @@
+#container {
+    display: block;
+    margin-left: auto;
+    margin-right: auto;
+    width: 900px;
+}
+
+.score {
+    text-align: right;
+    display: inline;
+}
+
+h1 {
+    text-align: center;
+}
