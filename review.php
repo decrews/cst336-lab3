@@ -1,5 +1,6 @@
 <?php
-    $players = array("Joe", "Peter", "Quagmire", "Cleaveland");
+    $players = array("Joe", "Peter", "Quagmire", "Cleveland");
+    $playerimgs = array("joe.jpg", "peter.jpg", "quagmire.jpg", "cleveland.jpg");
     $playerScores = array(0,0,0,0);
     $playerOne = array();
     $playerTwo = array();
@@ -30,13 +31,14 @@
     
     function displayHand($player, $playerNum) {
         global $playerScores;
+        global $playerimgs;
         global $players;
         global $suitArray;
         $handTotal = 0;
         
-        echo "<p>" . $players[$playerNum] . "</p>";
+        echo "<img src='imgs/".$playerimgs[$playerNum]."' />";
         foreach ($player as $vals) {
-            $cardSuit = floor($vals / 13);
+            $cardSuit = floor(($vals - 1) / 13);
             $cv = ($vals % 13) + 1;
             
             $playerScores[$playerNum] += $cv;
@@ -45,7 +47,20 @@
             echo "<img src='imgs/cards/".$suitArray[$cardSuit]."/".$cv.".png'>";
         }
         
-        echo "<p class='score'>" . $handTotal . "</p>";
+        echo "<p class='score'><strong>" . $handTotal . "</strong></p><br />";
+    }
+    
+    function displayPlayers() {
+        global $playerOne;
+        global $playerTwo;
+        global $playerThree;
+        global $playerFour;
+        $plrs = array($playerOne, $playerTwo, $playerThree, $playerFour);
+        $order = range(0,3);
+        shuffle($order);
+        for ($i = 0; $i < 4; $i++) {
+            displayHand($plrs[$i], $i);
+        }
     }
     
     function displayWinner() {
@@ -71,7 +86,7 @@
             $winningScore = $playerScores[3];
         }
         
-        echo "<br /><br /><h3 class='score'>" . $winningPlayer . " wins! </p>";
+        echo "<br /><br /><h3 class='winningscore'>" . $winningPlayer . " wins " . (array_sum($playerScores) - $winningScore) . " points! </p>";
     }
     
 ?>
@@ -82,6 +97,7 @@
         <title> Silverjack </title>
         <link rel="stylesheet" type="text/css" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css">
         <link rel="stylesheet" type="text/css" href="css/styles.css">
+        <link href="https://fonts.googleapis.com/css?family=Rye" rel="stylesheet">
         <meta name="viewport" content="width=device-width, initial-scale=1">
         <meta charset="utf-8">
     </head>
@@ -93,10 +109,7 @@
         
         <div id="container">
             <h1>Silverjack</h1>
-            <?=displayHand($playerOne, 0) ?>
-            <?=displayHand($playerTwo, 1) ?>
-            <?=displayHand($playerThree, 2) ?>
-            <?=displayHand($playerFour, 3) ?>
+            <?=displayPlayers() ?>
             <?=displayWinner($playerOne, $playerTwo, $playerThree, $playerFour) ?>
         </div>
         

@@ -1,15 +1,44 @@
 #container {
-    display: block;
+    width: 900px;
+    height: 100%;
+    background-color: white;
+    border-style: solid;
+    border-width: 2px;
+    border-top: none;
+    border-bottom: none;
+    display: inline-block;
     margin-left: auto;
     margin-right: auto;
-    width: 900px;
+    text-align: left;
+    padding-left: 30px;
+    padding-right: 30px;
 }
 
 .score {
-    text-align: right;
-    display: inline;
+    text-align: center !important;
+    float:right;
+    font-size: 2em;
+    /*display: inline;*/
+}
+
+.winningscore {
+    text-align: center !important;
+    font-size: 2em;
+    /*display: inline;*/
+}
+
+html, body {
+    background-image: url("../imgs/bg.jpg");
+    background-size: cover;
+    background-position:  center, center;
+    background-color: green;
+    text-align: center;
+    height: 100%;
 }
 
 h1 {
     text-align: center;
+    font-size: 5em;
+    color: black;
+    font-family: 'Rye', cursive;
 }
